@@ -2345,10 +2345,10 @@
   resolved "https://registry.yarnpkg.com/@thirdweb-dev/contracts/-/contracts-3.2.0-4.tgz#b696bdaae1dee7cf448549ac10bb78e55c622272"
   integrity sha512-Mc3VvBB6rqTMKKH04UQbDabAlVPT7PiKBQrJDuhAPjOxBYWwn9pHi7amXJt2tJOkmHAj+w+oT76q7IqWv3QHhw==
 
-"@thirdweb-dev/sdk@^3.5.1-nightly-c9c0e4f":
-  version "3.5.1-nightly-c9c0e4f"
-  resolved "https://registry.yarnpkg.com/@thirdweb-dev/sdk/-/sdk-3.5.1-nightly-c9c0e4f.tgz#cbcb0c0d57a63e91f4bc95ecbbad3e1ce925ed85"
-  integrity sha512-CGa/y3f/BWEGbKkHT0jy/CSONrNyWzghxtPZz7Eg9IETidArHOcJpmvfxQAdZHrDdkrZgRvtabW3c+Dir3vP/Q==
+"@thirdweb-dev/sdk@^3":
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/@thirdweb-dev/sdk/-/sdk-3.5.1.tgz#817d23e5b94bc7158caecdb5995201c86b478f24"
+  integrity sha512-rs73Gh3Qu6DKBj9gVYUZRCzaIrPFkggKoxvGciaCNmQpZ4dcxqicJmhbSphFrMhflsX5eCM5aKcduMPirIl9pw==
   dependencies:
     "@metaplex-foundation/js" "0.15.0"
     "@metaplex-foundation/mpl-token-metadata" "2.2.2"
