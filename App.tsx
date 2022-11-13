@@ -6,9 +6,11 @@ import "@ethersproject/shims";
 
 // Step 3: Import the thirdweb SDK
 
+import { NFT, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
 import {
-  Button,
+  Image,
   Linking,
   SafeAreaView,
   StyleSheet,
@@ -16,9 +18,23 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Card from "./components/Card";
 
 export default function App() {
+  const [nfts, setNFTS] = useState<NFT[]>([]);
+  useEffect(() => {
+    const sdk = new ThirdwebSDK("goerli");
+    const loadNFTS = async () => {
+      const contract = await sdk.getContract(
+        "0x9E7945873C945fB0cdd438c3a9cC55a825C5677D"
+      );
+      return await contract.erc721.getAll();
+    };
+
+    loadNFTS().then((_nfts) => {
+      setNFTS(_nfts);
+    });
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -29,25 +45,22 @@ export default function App() {
         </TouchableOpacity>
 
         <View style={styles.grid}>
-          <Card
-            description="Guides, references and resources that will help you build with
-                thirdweb."
-            link="https://portal.thirdweb.com"
-            title="Portal"
-          />
-          <Card
-            description="Deploy, configure and manage your smart contracts from the
-                dashboard."
-            link="https://thirdweb.com/dashboard"
-            title="Dashboard"
-          />
-
-          <Card
-            description="Discover and clone template projects showcasing thirdweb
-                features."
-            link="https://portal.thirdweb.com/templates"
-            title="Templates"
-          />
+          {nfts.map((nft, i) => (
+            <TouchableOpacity
+              onPress={() =>
+                // @ts-ignore
+                Linking.openURL(nft?.metadata?.attributes[i].value)
+              }
+              key={nft.metadata.id}
+            >
+              <Image
+                style={styles.image}
+                source={{
+                  uri: nft.metadata?.image as string,
+                }}
+              />
+            </TouchableOpacity>
+          ))}
         </View>
       </View>
       <StatusBar style="light" />
@@ -74,5 +87,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     maxWidth: "100%",
     marginTop: 16,
+  },
+  image: {
+    borderRadius: 10,
+    margin: 8,
+    width: 400,
+    height: 75,
   },
 });
