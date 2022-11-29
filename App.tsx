@@ -45,11 +45,11 @@ export default function App() {
         </TouchableOpacity>
 
         <View style={styles.grid}>
-          {nfts.map((nft, i) => (
+          {nfts.map((nft) => (
             <TouchableOpacity
               onPress={() =>
                 // @ts-ignore
-                Linking.openURL(nft?.metadata?.attributes[i].value)
+                Linking.openURL(nft?.metadata?.attributes[0].value)
               }
               key={nft.metadata.id}
             >
