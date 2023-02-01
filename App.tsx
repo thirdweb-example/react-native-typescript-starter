@@ -20,10 +20,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  useColorScheme,
   View,
 } from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useAccount, useConnect} from 'wagmi';
 
 const LOG_TAG = '(TW)';
@@ -41,12 +39,6 @@ const App = () => {
 };
 
 const AppInner = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   const {connector, isConnected} = useAccount();
 
   const {connect, connectors, error, isLoading, isSuccess, pendingConnector} =
@@ -101,7 +93,8 @@ const AppInner = () => {
   };
 
   return (
-    <SafeAreaView style={{...backgroundStyle, ...styles.mainView}}>
+    <SafeAreaView style={styles.mainView}>
+      <Text style={styles.title}>Welcome to thirdweb</Text>
       <TouchableOpacity style={styles.connectButton} onPress={onConnectPress}>
         <Text style={styles.text}>
           {isConnected ? 'Disconnect' : 'Connect'}
@@ -116,7 +109,9 @@ const AppInner = () => {
                   <TouchableOpacity
                     key={nft.metadata.name}
                     style={styles.nftView}>
-                    <Text>Name: {nft.metadata.name}</Text>
+                    <Text style={styles.nftText}>
+                      Name: {nft.metadata.name}
+                    </Text>
                     {nft?.metadata.image ? (
                       <Image
                         style={styles.image}
@@ -136,8 +131,17 @@ const AppInner = () => {
 
 const styles = StyleSheet.create({
   mainView: {
+    paddingTop: 15,
     flex: 1,
     alignItems: 'center',
+    backgroundColor: '#0f1318',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#f213a4',
   },
   scrollViewContainer: {
     flex: 1,
@@ -148,12 +152,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
+  nftText: {
+    color: 'white',
+  },
   image: {
     height: 150,
     width: '100%',
   },
   text: {
     textAlign: 'center',
+    color: '#f213a4',
   },
   connectButton: {
     height: 50,
@@ -161,7 +169,7 @@ const styles = StyleSheet.create({
     margin: 5,
     alignContent: 'center',
     justifyContent: 'center',
-    borderColor: 'black',
+    borderColor: 'white',
     borderWidth: 0.2,
     borderRadius: 10,
   },
