@@ -102,7 +102,7 @@ const AppInner = () => {
       .then(tx => {
         log('response', tx);
       })
-      .catch(error => log('sign.error', error));
+      .catch(signError => log('sign.error', signError));
 
     deepLink(WALLET_CONNECT_PREFIX);
   };
@@ -117,8 +117,8 @@ const AppInner = () => {
       .then(tx => {
         log('tx', tx);
       })
-      .catch(error => {
-        log('sendTransaction.error', error);
+      .catch(claimError => {
+        log('claim.error', claimError);
       });
 
     deepLink(WALLET_CONNECT_PREFIX);
