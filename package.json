@@ -10,15 +10,13 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@ethersproject/shims": "^5.7.0",
     "@react-native-async-storage/async-storage": "^1.17.11",
     "@thirdweb-dev/react-native": "file:.yalc/@thirdweb-dev/react-native",
-    "@walletconnect/react-native-compat": "^2.3.3",
+    "@thirdweb-dev/react-native-compat": "file:.yalc/@thirdweb-dev/react-native-compat",
     "ethers": "^5.7.2",
     "global": "^4.4.0",
     "react": "18.1.0",
     "react-native": "0.70.6",
-    "react-native-get-random-values": "^1.8.0",
     "react-native-quick-base64": "^2.0.5",
     "react-native-quick-crypto": "^0.5.0",
     "wagmi": "^0.11.2"

@@ -50,11 +50,12 @@ const App = () => {
 };
 
 const AppInner = () => {
-  const {isInitializing, displayUri, connectorError} = useThirdwebProvider();
+  const {isInitializing} = useThirdwebProvider();
 
-  const {isConnected} = useAccount();
+  const {connect, error, isLoading, isSuccess, displayUri, connectorError} =
+    useWalletConnect();
 
-  const {connect, error, isLoading, isSuccess} = useWalletConnect();
+  const {isConnected, connector} = useAccount();
 
   const disconnect = useDisconnect();
 

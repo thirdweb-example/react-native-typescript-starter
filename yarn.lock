@@ -1612,7 +1612,7 @@
   resolved "https://registry.yarnpkg.com/@pedrouid/environment/-/environment-1.0.1.tgz#858f0f8a057340e0b250398b75ead77d6f4342ec"
   integrity sha512-HaW78NszGzRZd9SeoI3JD11JqY+lubnaOx7Pewj5pfjqWXOEATpeKIFb9Z4t2WBUK2iryiXX3lzWwmYWgUL0Ug==
 
-"@react-native-async-storage/async-storage@^1.17.11":
+"@react-native-async-storage/async-storage@*", "@react-native-async-storage/async-storage@^1.17.11":
   version "1.17.11"
   resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.17.11.tgz#7ec329c1b9f610e344602e806b04d7c928a2341d"
   integrity sha512-bzs45n5HNcDq6mxXnSsOHysZWn1SbbebNxldBXCQs8dSvF8Aor9KCdpm+TpnnGweK3R6diqsT8lFhX77VX0NFw==
@@ -2076,6 +2076,15 @@
     "@tanstack/react-query" "^4.0.10"
     "@thirdweb-dev/auth" "^3.0.3"
     tiny-invariant "^1.2.0"
+
+"@thirdweb-dev/react-native-compat@file:.yalc/@thirdweb-dev/react-native-compat":
+  version "0.0.0"
+  dependencies:
+    "@ethersproject/shims" "^5.7.0"
+    "@react-native-async-storage/async-storage" "*"
+    "@walletconnect/react-native-compat" "^2.3.3"
+    events "3.3.0"
+    react-native-get-random-values "^1.8.0"
 
 "@thirdweb-dev/react-native@file:.yalc/@thirdweb-dev/react-native":
   version "0.0.0"
