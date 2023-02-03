@@ -9,6 +9,11 @@ import {
   ThirdwebProvider,
   useContract,
   useNFTs,
+  useAccount,
+  useThirdwebProvider,
+  useDisconnect,
+  useWalletConnect,
+  useSDK,
 } from '@thirdweb-dev/react-native';
 import React, {useEffect} from 'react';
 import {
@@ -22,12 +27,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useAccount, useConnect} from 'wagmi';
 
 const LOG_TAG = '(TW)';
+const WALLET_CONNECT_PREFIX = 'wc://';
 
 const log = (message: string, ...args: any[]) => {
   console.log(LOG_TAG, message, ...args);
+};
+
+const deepLink = (uri: string) => {
+  // Tricking the app to open the wallet app. This is usually not needed since
+  // apps should pop up a notification for signing but Trust Wallet does not at the moment.
+  Linking.openURL(uri);
 };
 
 const App = () => {
@@ -39,10 +50,27 @@ const App = () => {
 };
 
 const AppInner = () => {
-  const {connector, isConnected} = useAccount();
+  const {isInitializing, displayUri, connectorError} = useThirdwebProvider();
 
-  const {connect, connectors, error, isLoading, isSuccess, pendingConnector} =
-    useConnect();
+  const {isConnected} = useAccount();
+
+  const {connect, error, isLoading, isSuccess} = useWalletConnect();
+
+  const disconnect = useDisconnect();
+
+  const sdk = useSDK();
+
+  useEffect(() => {
+    if (displayUri && !isConnected) {
+      deepLink(displayUri);
+    }
+  }, [displayUri, isConnected]);
+
+  useEffect(() => {
+    if (connectorError) {
+      log('connectorError', connectorError);
+    }
+  }, [connectorError]);
 
   const {
     contract,
@@ -59,46 +87,59 @@ const AppInner = () => {
     count: 100,
   });
 
-  useEffect(() => {
-    // Only supports wallet connect for now, when adding more connectors
-    // it will subscribe after the user selects a connector
-    if (connectors[0]) {
-      log('connector', 'setListeners', connectors[0]);
-      const connector_ = connectors[0];
-      connector_.addListener('connect', data => {
-        log('connect', data);
-      });
-      connector_.addListener('message', ({type, data}) => {
-        log('message', type, data);
-        switch (type) {
-          case 'display_uri':
-            if (typeof data !== 'string') {
-              throw new Error('display_uri data is not a string');
-            }
-            Linking.openURL(data.replace('wc:', 'wc://'));
-            break;
-        }
-      });
-      connector_.addListener('error', e => {
-        log('error', e);
-      });
-      connector_.addListener('disconnect', () => {
-        log('disconnect');
-      });
-    }
-  }, [connectors]);
-
   const onConnectPress = async () => {
-    connect({connector: connectors[0]});
+    if (isConnected) {
+      disconnect();
+    } else {
+      connect();
+    }
   };
+
+  const signMessage = () => {
+    sdk?.wallet
+      .sign('Test Message')
+      .then(tx => {
+        log('response', tx);
+      })
+      .catch(error => log('sign.error', error));
+
+    deepLink(WALLET_CONNECT_PREFIX);
+  };
+
+  const claim = () => {
+    if (!contract) {
+      return;
+    }
+
+    contract.erc721
+      .claim(1)
+      .then(tx => {
+        log('tx', tx);
+      })
+      .catch(error => {
+        log('sendTransaction.error', error);
+      });
+
+    deepLink(WALLET_CONNECT_PREFIX);
+  };
+
+  if (isInitializing) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <SafeAreaView style={styles.mainView}>
       <Text style={styles.title}>Welcome to thirdweb</Text>
-      <TouchableOpacity style={styles.connectButton} onPress={onConnectPress}>
+      <TouchableOpacity style={styles.button} onPress={onConnectPress}>
         <Text style={styles.text}>
           {isConnected ? 'Disconnect' : 'Connect'}
         </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={signMessage}>
+        <Text style={styles.text}>Sign Message</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={claim}>
+        <Text style={styles.text}>Claim NFT</Text>
       </TouchableOpacity>
       <View style={styles.scrollViewContainer}>
         {isLoadingNFTs ? <ActivityIndicator /> : null}
@@ -163,7 +204,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#f213a4',
   },
-  connectButton: {
+  button: {
     height: 50,
     width: 100,
     margin: 5,
