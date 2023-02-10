@@ -1,7 +1,6 @@
 /**
  * @format
  */
-import 'crypto';
 
 import '@thirdweb-dev/react-native-compat';
 
