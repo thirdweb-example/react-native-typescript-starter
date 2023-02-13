@@ -11,7 +11,7 @@
 import React from 'react';
 import {Button, Linking, SafeAreaView, StyleSheet, Text} from 'react-native';
 
-import {useContract, useSDK} from '@thirdweb-dev/react-core';
+import {ChainId, useContract, useSDK} from '@thirdweb-dev/react-core';
 import {
   ThirdwebProvider,
   useAccount,
@@ -21,7 +21,7 @@ import {
 
 const App = () => {
   return (
-    <ThirdwebProvider>
+    <ThirdwebProvider activeChain={ChainId.Mainnet}>
       <AppInner />
     </ThirdwebProvider>
   );
