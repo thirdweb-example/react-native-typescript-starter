@@ -1,22 +1,25 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
  * @format
  */
 
 import React from 'react';
-import {Button, Linking, SafeAreaView, StyleSheet, Text} from 'react-native';
-
-import {ChainId, useContract, useSDK} from '@thirdweb-dev/react-core';
 import {
+  Alert,
+  Linking,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+
+import {
+  ChainId,
   ThirdwebProvider,
   useAccount,
+  useContract,
+  useDisconnect,
+  useSDK,
   useWalletConnect,
-  useWalletDisconnect,
 } from '@thirdweb-dev/react-native';
 
 const App = () => {
@@ -28,18 +31,17 @@ const App = () => {
 };
 
 const AppInner = () => {
+  const disconnect = useDisconnect();
+
   const sdk = useSDK();
 
   const {contract} = useContract('0xb8A3454db7042Ee72C93b42565357A2e13967FD4');
 
-  const {connector, connect, isLoading, isSuccess, connectError, displayUri} =
-    useWalletConnect();
-
-  const disconnect = useWalletDisconnect();
+  const {connect, displayUri} = useWalletConnect();
 
   const {address: account} = useAccount();
 
-  const onPress = () => {
+  const onConnectPress = () => {
     if (account) {
       disconnect();
     } else {
@@ -47,23 +49,31 @@ const AppInner = () => {
     }
   };
 
-  const signMessage = () => {
+  const onSignPress = () => {
+    if (!displayUri) {
+      Alert.alert('Connect to a wallet before claiming.');
+      return;
+    }
     console.log('sign.Message');
 
     sdk?.wallet
-      .sign('Test Message')
+      .sign('Hello Thirdweb React Native SDK!!')
       .then(tx => {
         console.log('response', tx);
       })
       .catch(error => console.log('sign.error', error));
 
-    Linking.openURL('wc:');
+    Linking.openURL(displayUri.split('?')[0]);
   };
 
-  const claim = async () => {
-    console.log('claim');
-    contract?.erc721
-      .claimTo('0x0beECa30ea02FB3B6258e056d8d6Cff6fB7d7240', 1)
+  const onClaimPress = async () => {
+    if (!contract || !account || !displayUri) {
+      Alert.alert('Connect to a wallet before claiming.');
+      return;
+    }
+
+    contract.erc721
+      .claimTo(account, 1)
       .then(tx => {
         console.log('tx', tx);
       })
@@ -71,62 +81,46 @@ const AppInner = () => {
         console.log('sendTransaction.error', error);
       });
 
-    Linking.openURL('wc:');
+    Linking.openURL(displayUri.split('?')[0]);
   };
 
   return (
     <SafeAreaView style={styles.backgroundStyle}>
-      <Text>{`Account: ${account}`}</Text>
+      <Text>{account ? `Account: ${account}` : 'Wallet not connected'}</Text>
 
-      <Button title={account ? 'Disconnect' : 'Connect'} onPress={onPress} />
-
-      <Button title={'Claim'} onPress={claim} />
-
-      <Button title={'Sign Message'} onPress={signMessage} />
+      <TouchableOpacity style={styles.button} onPress={onConnectPress}>
+        <Text style={styles.text}>{account ? 'Disconnect' : 'Connect'}</Text>
+      </TouchableOpacity>
+      {account ? (
+        <>
+          <TouchableOpacity style={styles.button} onPress={onClaimPress}>
+            <Text style={styles.text}>Claim</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={onSignPress}>
+            <Text style={styles.text}>Sign Message</Text>
+          </TouchableOpacity>
+        </>
+      ) : null}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 10,
-  },
-  scrollViewContainer: {
-    flex: 1,
-  },
-  touchable: {
-    marginTop: 10,
-    backgroundColor: 'blue',
-    padding: 10,
+  button: {
+    margin: 20,
+    alignContent: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    backgroundColor: 'blue',
   },
-  connectText: {
+  text: {
     color: 'white',
-    textAlign: 'center',
-  },
-  nftBalance: {
-    marginTop: 10,
-    flex: 1,
-  },
-  nftView: {
-    marginTop: 20,
-  },
-  image: {
-    height: 150,
-  },
-  textInput: {
-    borderWidth: 0.2,
-    borderRadius: 5,
-    borderColor: 'white',
-    marginTop: 5,
-    marginBottom: 5,
+    fontSize: 20,
   },
   backgroundStyle: {
     flex: 1,
     margin: 20,
-    justifyContent: 'space-evenly',
     alignContent: 'center',
   },
 });
