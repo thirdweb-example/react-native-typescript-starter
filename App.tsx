@@ -35,7 +35,7 @@ const AppInner = () => {
 
   const sdk = useSDK();
 
-  const {contract} = useContract('0xb8A3454db7042Ee72C93b42565357A2e13967FD4');
+  const {contract} = useContract('a-contract-address');
 
   const {connect, displayUri} = useWalletConnect();
 
