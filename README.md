@@ -14,7 +14,7 @@ Create a project using this example:
 npx thirdweb create --template react-native-typescript-starter
 ```
 
-You can start editing the page by modifying `App.jsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `App.tsx`. The page auto-updates as you edit the file.
 
 ## Learn More
 

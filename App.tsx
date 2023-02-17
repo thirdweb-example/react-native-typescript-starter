@@ -1,97 +1,128 @@
-// Step 1: Import the crypto getRandomValues shim (**BEFORE** the ethers shims)
-import "react-native-get-random-values";
+/**
+ * @format
+ */
 
-// Step 2: Import the ethers shims (**BEFORE** the thirdweb SDK)
-import "@ethersproject/shims";
-
-// Step 3: Import the thirdweb SDK
-
-import { NFT, ThirdwebSDK } from "@thirdweb-dev/sdk";
-import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import React from 'react';
 import {
-  Image,
+  Alert,
   Linking,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-} from "react-native";
+} from 'react-native';
 
-export default function App() {
-  const [nfts, setNFTS] = useState<NFT[]>([]);
-  useEffect(() => {
-    const sdk = new ThirdwebSDK("goerli");
-    const loadNFTS = async () => {
-      const contract = await sdk.getContract(
-        "0x9E7945873C945fB0cdd438c3a9cC55a825C5677D"
-      );
-      return await contract.erc721.getAll();
-    };
+import {
+  ChainId,
+  ThirdwebProvider,
+  useAccount,
+  useContract,
+  useDisconnect,
+  useSDK,
+  useWalletConnect,
+} from '@thirdweb-dev/react-native';
 
-    loadNFTS().then((_nfts) => {
-      setNFTS(_nfts);
-    });
-  }, []);
+const App = () => {
+  return (
+    <ThirdwebProvider activeChain={ChainId.Mainnet}>
+      <AppInner />
+    </ThirdwebProvider>
+  );
+};
+
+const AppInner = () => {
+  const disconnect = useDisconnect();
+
+  const sdk = useSDK();
+
+  const {contract} = useContract('a-contract-address');
+
+  const {connect, displayUri} = useWalletConnect();
+
+  const {address: account} = useAccount();
+
+  const onConnectPress = () => {
+    if (account) {
+      disconnect();
+    } else {
+      connect();
+    }
+  };
+
+  const onSignPress = () => {
+    if (!displayUri) {
+      Alert.alert('Connect to a wallet before claiming.');
+      return;
+    }
+    console.log('sign.Message');
+
+    sdk?.wallet
+      .sign('Hello Thirdweb React Native SDK!!')
+      .then(tx => {
+        console.log('response', tx);
+      })
+      .catch(error => console.log('sign.error', error));
+
+    Linking.openURL(displayUri.split('?')[0]);
+  };
+
+  const onClaimPress = async () => {
+    if (!contract || !account || !displayUri) {
+      Alert.alert('Connect to a wallet before claiming.');
+      return;
+    }
+
+    contract.erc721
+      .claimTo(account, 1)
+      .then(tx => {
+        console.log('tx', tx);
+      })
+      .catch(error => {
+        console.log('sendTransaction.error', error);
+      });
+
+    Linking.openURL(displayUri.split('?')[0]);
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => Linking.openURL("https://thirdweb.com")}
-        >
-          <Text style={styles.title}>Welcome to thirdweb</Text>
-        </TouchableOpacity>
+    <SafeAreaView style={styles.backgroundStyle}>
+      <Text>{account ? `Account: ${account}` : 'Wallet not connected'}</Text>
 
-        <View style={styles.grid}>
-          {nfts.map((nft) => (
-            <TouchableOpacity
-              onPress={() =>
-                // @ts-ignore
-                Linking.openURL(nft?.metadata?.attributes[0].value)
-              }
-              key={nft.metadata.id}
-            >
-              <Image
-                style={styles.image}
-                source={{
-                  uri: nft.metadata?.image as string,
-                }}
-              />
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-      <StatusBar style="light" />
+      <TouchableOpacity style={styles.button} onPress={onConnectPress}>
+        <Text style={styles.text}>{account ? 'Disconnect' : 'Connect'}</Text>
+      </TouchableOpacity>
+      {account ? (
+        <>
+          <TouchableOpacity style={styles.button} onPress={onClaimPress}>
+            <Text style={styles.text}>Claim</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={onSignPress}>
+            <Text style={styles.text}>Sign Message</Text>
+          </TouchableOpacity>
+        </>
+      ) : null}
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0f1318",
-    alignItems: "center",
-    justifyContent: "center",
+  button: {
+    margin: 20,
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    backgroundColor: 'blue',
   },
-  title: {
+  text: {
+    color: 'white',
     fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "#f213a4",
   },
-  grid: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    maxWidth: "100%",
-    marginTop: 16,
-  },
-  image: {
-    borderRadius: 10,
-    margin: 8,
-    width: 400,
-    height: 75,
+  backgroundStyle: {
+    flex: 1,
+    margin: 20,
+    alignContent: 'center',
   },
 });
+
+export default App;
