@@ -1,126 +1,71 @@
 /**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * Generated with the TypeScript template
+ * https://github.com/react-native-community/react-native-template-typescript
+ *
  * @format
  */
 
-import React from 'react';
 import {
-  Alert,
-  Linking,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
-
-import {
-  ChainId,
+  CoinbaseWallet,
+  ConnectWallet,
+  MetaMaskWallet,
+  RainbowWallet,
   ThirdwebProvider,
-  useAccount,
-  useContract,
-  useDisconnect,
-  useSDK,
-  useWalletConnect,
+  TrustWallet,
+  Web3Button,
 } from '@thirdweb-dev/react-native';
+import React from 'react';
+import {SafeAreaView, StyleSheet, useColorScheme, View} from 'react-native';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
   return (
-    <ThirdwebProvider activeChain={ChainId.Mainnet}>
+    <ThirdwebProvider
+      activeChain={1}
+      supportedWallets={[
+        MetaMaskWallet,
+        CoinbaseWallet,
+        RainbowWallet,
+        TrustWallet,
+      ]}>
       <AppInner />
     </ThirdwebProvider>
   );
 };
 
 const AppInner = () => {
-  const disconnect = useDisconnect();
-
-  const sdk = useSDK();
-
-  const {contract} = useContract('a-contract-address');
-
-  const {connect, displayUri} = useWalletConnect();
-
-  const {address: account} = useAccount();
-
-  const onConnectPress = () => {
-    if (account) {
-      disconnect();
-    } else {
-      connect();
-    }
-  };
-
-  const onSignPress = () => {
-    if (!displayUri) {
-      Alert.alert('Connect to a wallet before claiming.');
-      return;
-    }
-    console.log('sign.Message');
-
-    sdk?.wallet
-      .sign('Hello Thirdweb React Native SDK!!')
-      .then(tx => {
-        console.log('response', tx);
-      })
-      .catch(error => console.log('sign.error', error));
-
-    Linking.openURL(displayUri.split('?')[0]);
-  };
-
-  const onClaimPress = async () => {
-    if (!contract || !account || !displayUri) {
-      Alert.alert('Connect to a wallet before claiming.');
-      return;
-    }
-
-    contract.erc721
-      .claimTo(account, 1)
-      .then(tx => {
-        console.log('tx', tx);
-      })
-      .catch(error => {
-        console.log('sendTransaction.error', error);
-      });
-
-    Linking.openURL(displayUri.split('?')[0]);
+  const isDarkMode = useColorScheme() === 'dark';
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
   return (
-    <SafeAreaView style={styles.backgroundStyle}>
-      <Text>{account ? `Account: ${account}` : 'Wallet not connected'}</Text>
+    <SafeAreaView style={backgroundStyle}>
+      <View style={styles.view}>
+        <ConnectWallet />
 
-      <TouchableOpacity style={styles.button} onPress={onConnectPress}>
-        <Text style={styles.text}>{account ? 'Disconnect' : 'Connect'}</Text>
-      </TouchableOpacity>
-      {account ? (
-        <>
-          <TouchableOpacity style={styles.button} onPress={onClaimPress}>
-            <Text style={styles.text}>Claim</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={onSignPress}>
-            <Text style={styles.text}>Sign Message</Text>
-          </TouchableOpacity>
-        </>
-      ) : null}
+        <Web3Button
+          contractAddress="<a-contract-address>"
+          action={contract => {
+            // a contract action. e.g:
+            contract?.erc721.claimTo('<a-wallet-address>', 1);
+          }}>
+          Claim
+        </Web3Button>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    margin: 20,
-    alignContent: 'center',
-    justifyContent: 'center',
+  view: {
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: 50,
-    backgroundColor: 'blue',
-  },
-  text: {
-    color: 'white',
-    fontSize: 20,
-  },
-  backgroundStyle: {
-    flex: 1,
-    margin: 20,
     alignContent: 'center',
   },
 });
