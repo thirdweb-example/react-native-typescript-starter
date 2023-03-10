@@ -2,6 +2,7 @@
  * @format
  */
 
+// Import polyfills
 import '@thirdweb-dev/react-native-compat';
 
 import {AppRegistry} from 'react-native';
