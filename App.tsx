@@ -9,6 +9,7 @@
  */
 
 import {
+  ChainId,
   CoinbaseWallet,
   ConnectWallet,
   MetaMaskWallet,
@@ -22,7 +23,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 const App = () => {
   return (
     <ThirdwebProvider
-      activeChain={1}
+      activeChain={ChainId.Mainnet}
       supportedWallets={[MetaMaskWallet, CoinbaseWallet]}>
       <AppInner />
     </ThirdwebProvider>
