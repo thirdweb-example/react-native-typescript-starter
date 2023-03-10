@@ -12,9 +12,7 @@ import {
   CoinbaseWallet,
   ConnectWallet,
   MetaMaskWallet,
-  RainbowWallet,
   ThirdwebProvider,
-  TrustWallet,
   Web3Button,
 } from '@thirdweb-dev/react-native';
 import React from 'react';
@@ -25,12 +23,7 @@ const App = () => {
   return (
     <ThirdwebProvider
       activeChain={1}
-      supportedWallets={[
-        MetaMaskWallet,
-        CoinbaseWallet,
-        RainbowWallet,
-        TrustWallet,
-      ]}>
+      supportedWallets={[MetaMaskWallet, CoinbaseWallet]}>
       <AppInner />
     </ThirdwebProvider>
   );
