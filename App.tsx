@@ -9,7 +9,6 @@
  */
 
 import {
-  ChainId,
   CoinbaseWallet,
   ConnectWallet,
   MetaMaskWallet,
@@ -23,7 +22,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 const App = () => {
   return (
     <ThirdwebProvider
-      activeChain={ChainId.Mainnet}
+      activeChain={'mumbai'}
       supportedWallets={[MetaMaskWallet, CoinbaseWallet]}>
       <AppInner />
     </ThirdwebProvider>
@@ -42,12 +41,13 @@ const AppInner = () => {
         <ConnectWallet />
 
         <Web3Button
-          contractAddress="<a-contract-address>"
-          action={contract => {
+          contractAddress="0x43e906b1B8bBBE0ba4345B66dc9ae6690E553124"
+          action={async contract => {
             // a contract action. e.g:
-            contract?.erc721.claimTo('<a-wallet-address>', 1);
+            const tokenId = 0;
+            const nft = await contract.erc721.get(tokenId);
           }}>
-          Claim
+          Get all NFTs
         </Web3Button>
       </View>
     </SafeAreaView>
