@@ -1,4 +1,10 @@
-import { ConnectWallet, ThirdwebProvider } from '@thirdweb-dev/react-native';
+import {
+  CoinbaseWallet,
+  ConnectWallet,
+  MetaMaskWallet,
+  RainbowWallet,
+  ThirdwebProvider,
+} from '@thirdweb-dev/react-native';
 import React from 'react';
 import {
   SafeAreaView,
@@ -11,7 +17,9 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
   return (
-    <ThirdwebProvider activeChain={'mumbai'}>
+    <ThirdwebProvider
+      activeChain="mumbai"
+      supportedWallets={[CoinbaseWallet, MetaMaskWallet, RainbowWallet]}>
       <AppInner />
     </ThirdwebProvider>
   );
