@@ -19,7 +19,7 @@ const App = () => {
   return (
     <ThirdwebProvider
       activeChain="mumbai"
-      supportedWallets={[coinbaseWallet(), metamaskWallet(), rainbowWallet()]}>
+      supportedWallets={[metamaskWallet(), rainbowWallet(), coinbaseWallet()]}>
       <AppInner />
     </ThirdwebProvider>
   );
