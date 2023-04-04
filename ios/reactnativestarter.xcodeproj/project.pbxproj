@@ -313,7 +313,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.thirdwebexample.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = reactnativestarter;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

@@ -1,5 +1,4 @@
 import {
-  coinbaseWallet,
   ConnectWallet,
   metamaskWallet,
   rainbowWallet,
@@ -19,7 +18,7 @@ const App = () => {
   return (
     <ThirdwebProvider
       activeChain="mumbai"
-      supportedWallets={[metamaskWallet(), rainbowWallet(), coinbaseWallet()]}>
+      supportedWallets={[metamaskWallet(), rainbowWallet()]}>
       <AppInner />
     </ThirdwebProvider>
   );
