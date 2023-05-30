@@ -3,7 +3,6 @@ import {
   localWallet,
   metamaskWallet,
   rainbowWallet,
-  smartWallet,
   ThirdwebProvider,
 } from '@thirdweb-dev/react-native';
 import React from 'react';
@@ -20,18 +19,7 @@ const App = () => {
   return (
     <ThirdwebProvider
       activeChain="mumbai"
-      supportedWallets={[
-        metamaskWallet(),
-        rainbowWallet(),
-        localWallet(),
-        smartWallet({
-          factoryAddress: '0x9838b534cd5950CB6ea9E7fa94c00CF3986F953B', //'0xe448A5878866dD47F61C6654Ee297631eEb98966', //'0xe448A5878866dD47F61C6654Ee297631eEb98966',
-          thirdwebApiKey:
-            'b78e9bf42aee33f5484e36a4d8eef9d608a37387d55e3392a37719388a10efc62884edcd1981aace4e27402d2fe5d03accfaaf35b11d0e29946d61dec9b84386',
-          gasless: true,
-          personalWallets: [metamaskWallet(), localWallet()],
-        }),
-      ]}>
+      supportedWallets={[metamaskWallet(), rainbowWallet(), localWallet()]}>
       <AppInner />
     </ThirdwebProvider>
   );
