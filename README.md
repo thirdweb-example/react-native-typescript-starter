@@ -1,9 +1,5 @@
 # React Native + thirdweb + TypeScript Starter Template
 
-## 👷🚧 Alpha 🚧👷
-
-This template is in alpha right now. We're working on improving it and adding more features. If you have any feedback, please let us know!
-
 Got questions? Jump into our [Discord](https://discord.gg/thirdweb) to speak with us directly.
 
 ## Getting Started
@@ -11,7 +7,7 @@ Got questions? Jump into our [Discord](https://discord.gg/thirdweb) to speak wit
 Create a project using this example:
 
 ```bash
-npx thirdweb create app --app --react-native --typescript
+npx thirdweb create --template react-native-typescript-starter
 ```
 
 Install dependencies:
