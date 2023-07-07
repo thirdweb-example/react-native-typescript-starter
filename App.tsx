@@ -6,13 +6,7 @@ import {
   ThirdwebProvider,
 } from '@thirdweb-dev/react-native';
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, useColorScheme, View} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
@@ -27,9 +21,6 @@ const App = () => {
 
 const AppInner = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
   const textStyles = {
     color: isDarkMode ? Colors.white : Colors.black,
@@ -37,12 +28,10 @@ const AppInner = () => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <View style={styles.view}>
-        <Text style={textStyles}>React Native thirdweb starter</Text>
-        <ConnectWallet />
-      </View>
-    </SafeAreaView>
+    <View style={styles.view}>
+      <Text style={textStyles}>React Native thirdweb starter</Text>
+      <ConnectWallet />
+    </View>
   );
 };
 
