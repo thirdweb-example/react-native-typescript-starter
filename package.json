@@ -14,7 +14,7 @@
     "@thirdweb-dev/react-native": "^0.2",
     "@thirdweb-dev/react-native-compat": "^0.2",
     "ethers": "^5",
-    "expo": "^48.0.0",
+    "expo": "^47.0.0",
     "node-libs-browser": "^2.2.1",
     "react": "^18.2",
     "react-native": "0.71.8",
