@@ -22,9 +22,25 @@ If you are developing on iOS, you will need to install the pods:
 cd ios && pod install
 ```
 
+## Get a clientId
+
+You can [get your clientId](https://thirdweb.com/dashboard/settings/api-keys) from our Dashboard and set it in the `.env` file.
+
+Please, make sure to add your app's `bundleId` in the Allowed Bundle IDs list. Here's more info on [how to get your app's bundleId](https://portal.thirdweb.com/api-keys#how-to-get-my-bundleid)
+
 ## Running the app
 
-Open the project in Xcode and left click on the folder name and select your apple developer team. Then, click the play button to run the app.
+Android:
+
+```
+yarn android
+```
+
+iOS:
+
+```
+yarn ios
+```
 
 ## Learn More
 
