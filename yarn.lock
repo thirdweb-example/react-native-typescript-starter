@@ -3960,9 +3960,9 @@
     tiny-invariant "^1.2.0"
 
 "@thirdweb-dev/react-native-compat@^0.2":
-  version "0.2.42"
-  resolved "https://registry.yarnpkg.com/@thirdweb-dev/react-native-compat/-/react-native-compat-0.2.42.tgz#30aaaa1be20cd219cd57817aff282e00dcf9742c"
-  integrity sha512-PNQo4rXFMtLxYIvywKs6lCuTB2ipRhG8/uMAMzqWIOhduI0Rrlsp/8an4q+gNAV2qcN+KCRQ9HaHD9eqhxSHbA==
+  version "0.2.50"
+  resolved "https://registry.yarnpkg.com/@thirdweb-dev/react-native-compat/-/react-native-compat-0.2.50.tgz#13434c5fff8dcf1a5fee8f7897ae10af2e1fdc57"
+  integrity sha512-7JYpoWouxQC4W6EwDAByXI+GrmUFcj0a72u+8pbqz+h8XeT0D3j2swDtdkNMUU9myjInQlkkqfha915DvkgFnQ==
   dependencies:
     "@ethersproject/shims" "^5.7.0"
     "@walletconnect/react-native-compat" "^2.8.6"
@@ -4565,9 +4565,9 @@
     "@walletconnect/modal-ui" "2.6.1"
 
 "@walletconnect/react-native-compat@^2.8.6":
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/@walletconnect/react-native-compat/-/react-native-compat-2.9.1.tgz#1bab209cb702c3e6041a47ca62ab5a20cfc5b800"
-  integrity sha512-WzkknuzPMmAoc2hNqSUeJ722FRAL6rNrBZWeiXhlAG63QO3HOYVRuz7psEROYdhz+zwcOEX+etkUjO40LBuGtQ==
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/@walletconnect/react-native-compat/-/react-native-compat-2.9.2.tgz#b6c4eeed93bd01d5b59969b5e2bd61648f8fa1b7"
+  integrity sha512-TH+26R0SQNA7LqUx1XaNx4jJLjdKhu3gCvci7FHRuX8Y/s18Ri6V3iRKRvtkixlAfLQlhOmJjbgaxlffn60wCQ==
   dependencies:
     events "3.3.0"
     fast-text-encoding "^1.0.6"
