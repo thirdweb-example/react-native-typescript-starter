@@ -1,4 +1,5 @@
 import {
+  coinbaseWallet,
   ConnectWallet,
   localWallet,
   metamaskWallet,
@@ -13,7 +14,15 @@ const App = () => {
   return (
     <ThirdwebProvider
       activeChain="mumbai"
-      supportedWallets={[metamaskWallet(), rainbowWallet(), localWallet()]}>
+      clientId={process.env.TW_CLIENT_ID}
+      supportedWallets={[
+        metamaskWallet(),
+        rainbowWallet(),
+        localWallet(),
+        coinbaseWallet({
+          callbackURL: new URL('org.reactjs.native.example.test15://'),
+        }),
+      ]}>
       <AppInner />
     </ThirdwebProvider>
   );
