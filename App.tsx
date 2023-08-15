@@ -1,5 +1,4 @@
 import {
-  coinbaseWallet,
   ConnectWallet,
   localWallet,
   metamaskWallet,
@@ -9,20 +8,14 @@ import {
 import React from 'react';
 import {StyleSheet, Text, useColorScheme, View} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {TW_CLIENT_ID} from '@env';
 
 const App = () => {
   return (
     <ThirdwebProvider
       activeChain="mumbai"
-      clientId={process.env.TW_CLIENT_ID}
-      supportedWallets={[
-        metamaskWallet(),
-        rainbowWallet(),
-        localWallet(),
-        coinbaseWallet({
-          callbackURL: new URL('org.reactjs.native.example.test15://'),
-        }),
-      ]}>
+      clientId={TW_CLIENT_ID}
+      supportedWallets={[metamaskWallet(), rainbowWallet(), localWallet()]}>
       <AppInner />
     </ThirdwebProvider>
   );
