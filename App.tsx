@@ -14,7 +14,7 @@ const App = () => {
   return (
     <ThirdwebProvider
       activeChain="mumbai"
-      clientId={TW_CLIENT_ID}
+      // clientId={TW_CLIENT_ID} // uncomment this line after you set your clientId in the .env file
       supportedWallets={[metamaskWallet(), rainbowWallet(), localWallet()]}>
       <AppInner />
     </ThirdwebProvider>
