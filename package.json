@@ -11,8 +11,9 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.18.1",
-    "@thirdweb-dev/react-native": "^0.2",
-    "@thirdweb-dev/react-native-compat": "^0.2",
+    "@react-native-community/netinfo": "^9.4.1",
+    "@thirdweb-dev/react-native": "^0.3",
+    "@thirdweb-dev/react-native-compat": "^0.3",
     "ethers": "^5",
     "expo": "^49.0.3",
     "node-libs-browser": "^2.2.1",

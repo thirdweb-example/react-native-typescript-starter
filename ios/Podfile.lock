@@ -413,6 +413,8 @@ PODS:
   - react-native-mmkv (2.8.0):
     - MMKV (>= 1.2.13)
     - React-Core
+  - react-native-netinfo (9.4.1):
+    - React-Core
   - react-native-randombytes (3.6.1):
     - React-Core
   - React-NativeModulesApple (0.72.4):
@@ -593,6 +595,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -705,6 +708,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-get-random-values"
   react-native-mmkv:
     :path: "../node_modules/react-native-mmkv"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-randombytes:
     :path: "../node_modules/react-native-randombytes"
   React-NativeModulesApple:
@@ -798,6 +803,7 @@ SPEC CHECKSUMS:
   React-logger: da1ebe05ae06eb6db4b162202faeafac4b435e77
   react-native-get-random-values: dee677497c6a740b71e5612e8dbd83e7539ed5bb
   react-native-mmkv: 7da5e18e55c04a9af9a7e0ab9792a1e8d33765a1
+  react-native-netinfo: fefd4e98d75cbdd6e85fc530f7111a8afdf2b0c5
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   React-NativeModulesApple: edb5ace14f73f4969df6e7b1f3e41bef0012740f
   React-perflogger: 496a1a3dc6737f964107cb3ddae7f9e265ddda58

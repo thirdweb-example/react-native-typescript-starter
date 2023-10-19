@@ -4,6 +4,8 @@ import {
   metamaskWallet,
   rainbowWallet,
   ThirdwebProvider,
+  trustWallet,
+  walletConnect,
 } from '@thirdweb-dev/react-native';
 import React from 'react';
 import {StyleSheet, Text, useColorScheme, View} from 'react-native';
@@ -14,8 +16,14 @@ const App = () => {
   return (
     <ThirdwebProvider
       activeChain="mumbai"
-      // clientId={TW_CLIENT_ID} // uncomment this line after you set your clientId in the .env file
-      supportedWallets={[metamaskWallet(), rainbowWallet(), localWallet()]}>
+      clientId={TW_CLIENT_ID} // uncomment this line after you set your clientId in the .env file
+      supportedWallets={[
+        metamaskWallet(),
+        rainbowWallet(),
+        walletConnect(),
+        trustWallet(),
+        localWallet(),
+      ]}>
       <AppInner />
     </ThirdwebProvider>
   );
