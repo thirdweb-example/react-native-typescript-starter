@@ -1,5 +1,6 @@
 import {
   ConnectWallet,
+  embeddedWallet,
   localWallet,
   metamaskWallet,
   rainbowWallet,
@@ -18,9 +19,23 @@ const App = () => {
       activeChain="mumbai"
       clientId={TW_CLIENT_ID} // uncomment this line after you set your clientId in the .env file
       supportedWallets={[
-        metamaskWallet(),
+        metamaskWallet({
+          recommended: true,
+        }),
         rainbowWallet(),
-        walletConnect(),
+        walletConnect({
+          recommended: true,
+        }),
+        embeddedWallet({
+          auth: {
+            // you need to enable EmbeddedWallets under your API Key in your thirdweb dashboard:
+            // https://thirdweb.com/dashboard/settings/api-keys
+            options: ['email', 'google'],
+            // you need to add this deeplink in your allowed `Redirect URIs` under your API Key in your thirdweb dashboard:
+            // https://thirdweb.com/dashboard/settings/api-keys
+            redirectUrl: 'rnstarter://',
+          },
+        }),
         trustWallet(),
         localWallet(),
       ]}>
